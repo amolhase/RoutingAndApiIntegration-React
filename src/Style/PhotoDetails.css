@@ -1,0 +1,12 @@
+.details{
+    background-color: aliceblue;
+    width:620px;
+    height: 610px;
+    border: 2px solid black;
+    margin-left: 100px;
+    padding: 50px;
+}
+
+.heading{
+    margin-left: 350px;
+}
