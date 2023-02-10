@@ -3,28 +3,17 @@ import PhotoComponent from "./PhotoComponent";
 import "../Style/GallaryComponent.css";
 import ReactPaginate from "react-paginate";
 import { useSelector, useDispatch } from "react-redux";
-import { loading } from "../redux/GallarySlice";
+import { fetchData,loaded } from "../redux/GallarySlice";
 
 const perPage = 50;
 
 const GallaryComponent = () => {
-  //const [photosData, setPhotosData] = useState([]);
-  const photosData = useSelector((state) => state.imageData.photos);
-  console.log("data", photosData);
-  console.log("length", photosData.length);
+  const photosData = useSelector((state) => state.imageData.data);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   console.log("before dispatch photosData", photosData);
-  //   dispatch(loading());
-  //   console.log("after dispatch photosData", photosData);
-  // }, []);
-
-  // useEffect(() => {
-  //   fetch("https://jsonplaceholder.typicode.com/photos")
-  //     .then((res) => res.json())
-  //     .then((data) => setPhotosData(data));
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchData());
+  }, []);
 
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + perPage;
@@ -36,9 +25,9 @@ const GallaryComponent = () => {
     setItemOffset(newOffset);
   };
 
-  const handlePerpage = () => {
-    dispatch(loading());
-  };
+  // const handlePerpage = () => {
+  //   dispatch(loaded());
+  // };
 
   return (
       <>
@@ -50,11 +39,11 @@ const GallaryComponent = () => {
             return <PhotoComponent key={index} photo={photo} />;
           })}
         </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        {/* <div style={{ display: "flex", justifyContent: "center" }}>
           <button className="gallary-btn" onClick={handlePerpage}>
             View Gallary
           </button>
-        </div>
+        </div> */}
         <div className="page-container">
           <ReactPaginate
             previousLabel={"← previous"}
