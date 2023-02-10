@@ -1,12 +1,15 @@
 .details{
-    background-color: aliceblue;
-    width:620px;
-    height: 610px;
+    background-color: white;
+    width:310px;
+    height: auto;
     border: 2px solid black;
-    margin-left: 100px;
-    padding: 50px;
+    margin-top: 20px;
+    margin-left: 450px;
+    padding: 15px;
+    padding-left: 20px;
 }
 
-.heading{
-    margin-left: 350px;
+.image-details img{
+    height: 300px;
+    width: 300px;
 }
