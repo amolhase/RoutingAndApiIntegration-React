@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const fetchData = () => (dispatch) => {
-  dispatch(FETCH_PHOTO_REQUEST());
+  dispatch(fetchPhotoRequest());
   fetch("https://jsonplaceholder.typicode.com/photos")
     .then((res) => res.json())
-    .then((photosData) => dispatch(FETCH_PHOTO_SUCCESS(photosData)))
+    .then((photosData) => dispatch(fetchPhotoSuccess(photosData)))
     .catch((error) => {
-      dispatch(FETCH_PHOTO_ERROR(error.message));
+      dispatch(fetchPhotoError(error.message));
     });
 };
 
@@ -20,19 +20,19 @@ export const GallarySlice = createSlice({
   name: "GallaryComponent",
   initialState,
   reducers: {
-    FETCH_PHOTO_REQUEST: (state) => {
+    fetchPhotoRequest: (state) => {
       return {
         loading: true,
         photosData: [],
       };
     },
-    FETCH_PHOTO_SUCCESS: (state, action) => {
+    fetchPhotoSuccess: (state, action) => {
       return {
         loading: false,
         photosData: action.payload,
       };
     },
-    FETCH_PHOTO_ERROR: (state, action) => {
+    fetchPhotoError: (state, action) => {
       return {
         loading: false,
         photosData: [],
@@ -42,7 +42,7 @@ export const GallarySlice = createSlice({
   },
 });
 
-export const { FETCH_PHOTO_REQUEST, FETCH_PHOTO_SUCCESS, FETCH_PHOTO_ERROR } =
+export const { fetchPhotoRequest, fetchPhotoSuccess, fetchPhotoError } =
   GallarySlice.actions;
 
 export default GallarySlice.reducer;
