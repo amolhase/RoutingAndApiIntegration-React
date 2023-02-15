@@ -3,13 +3,14 @@ import PhotoComponent from "./PhotoComponent";
 import "../Style/GallaryComponent.css";
 import ReactPaginate from "react-paginate";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchData,loaded } from "../redux/GallarySlice";
+import { fetchData, loaded } from "../redux/GallarySlice";
 
 const perPage = 50;
 
 const GallaryComponent = () => {
-  const photosData = useSelector((state) => state.imageData.data);
+  const data = useSelector((state) => state.imageData);
   const dispatch = useDispatch();
+  const { photosData, loadingData } = data;
 
   useEffect(() => {
     dispatch(fetchData());
@@ -30,34 +31,38 @@ const GallaryComponent = () => {
   // };
 
   return (
-      <>
-        <div className="header">
-          <p className="heading-text">Gallary of Images</p>
-        </div>
-        <div className="container">
-          {currentItems.map((photo, index) => {
+    <>
+      <div className="header">
+        <p className="heading-text">Gallary of Images</p>
+      </div>
+      <div className="container">
+        {loadingData ? 
+          <h1>Data is Loading...</h1>
+         : 
+          currentItems.map((photo, index) => {
             return <PhotoComponent key={index} photo={photo} />;
-          })}
-        </div>
-        {/* <div style={{ display: "flex", justifyContent: "center" }}>
+          }
+        )}
+      </div>
+      {/* <div style={{ display: "flex", justifyContent: "center" }}>
           <button className="gallary-btn" onClick={handlePerpage}>
             View Gallary
           </button>
         </div> */}
-        <div className="page-container">
-          <ReactPaginate
-            previousLabel={"← previous"}
-            nextLabel="next →"
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            previousLinkClassName={"pagination_link"}
-            nextLinkClassName={"pagination_link"}
-            disabledClassName={"pagination_link--disabled"}
-            activeClassName={"pagination_link--active"}
-          />
-        </div>
-      </>
+      <div className="page-container">
+        <ReactPaginate
+          previousLabel={"← previous"}
+          nextLabel="next →"
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          previousLinkClassName={"pagination_link"}
+          nextLinkClassName={"pagination_link"}
+          disabledClassName={"pagination_link--disabled"}
+          activeClassName={"pagination_link--active"}
+        />
+      </div>
+    </>
   );
 };
 
