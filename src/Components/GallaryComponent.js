@@ -3,18 +3,19 @@ import PhotoComponent from "./PhotoComponent";
 import "../Style/GallaryComponent.css";
 import ReactPaginate from "react-paginate";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchData, loaded } from "../redux/GallarySlice";
+import { fetchData } from "../redux/GallarySlice";
+import spinner from "../assets/images/spinner.gif"
 
 const perPage = 50;
 
 const GallaryComponent = () => {
   const data = useSelector((state) => state.imageData);
   const dispatch = useDispatch();
-  const { photosData, loadingData } = data;
+  const { photosData, loading, error } = data;
 
   useEffect(() => {
     dispatch(fetchData());
-  }, []);
+  }, [dispatch]);
 
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + perPage;
@@ -26,29 +27,24 @@ const GallaryComponent = () => {
     setItemOffset(newOffset);
   };
 
-  // const handlePerpage = () => {
-  //   dispatch(loaded());
-  // };
-
   return (
     <>
       <div className="header">
         <p className="heading-text">Gallary of Images</p>
       </div>
       <div className="container">
-        {loadingData ? 
-          <h1>Data is Loading...</h1>
-         : 
+        {loading ? (
+          <div className="spinner">
+            <img src={spinner} alt="alt" />
+          </div>
+        ) : error ? (
+          <h1>{error}</h1>
+        ) : (
           currentItems.map((photo, index) => {
             return <PhotoComponent key={index} photo={photo} />;
-          }
+          })
         )}
       </div>
-      {/* <div style={{ display: "flex", justifyContent: "center" }}>
-          <button className="gallary-btn" onClick={handlePerpage}>
-            View Gallary
-          </button>
-        </div> */}
       <div className="page-container">
         <ReactPaginate
           previousLabel={"← previous"}
