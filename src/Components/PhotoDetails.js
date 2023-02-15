@@ -6,9 +6,10 @@ const PhotoDetails = (props) => {
   let data = [];
   const { id } = useParams();
 
-  const photo = useSelector(state => state.imageData.data);
+  const images = useSelector(state => state.imageData);
+  const {photosData} = images;
 
-  photo.filter(image => {
+  photosData.filter(image => {
     if(image.id == id){
       data = image;
     }
